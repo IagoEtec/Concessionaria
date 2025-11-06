@@ -1,53 +1,35 @@
 <?php
-require 'db.php';
-require 'config.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = $_POST['senha'];
-
-    $stmt = $pdo->prepare("SELECT * FROM login WHERE username = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
-
-    if ($user && password_verify($password, $user['senha'])) {
-        $_SESSION['user_id'] = $user['idlog'];
-        $_SESSION['username'] = $user['username'];
-        header("Location: catalogo.php");
-        exit;
-    } else {
-        $error = "Usuário ou senha inválidos!";
-    }
+session_start();
+if (isset($_SESSION['mensagem'])) {
+    echo "<script>alert('" . $_SESSION['mensagem'] . "');</script>";
+    unset($_SESSION['mensagem']);
 }
 ?>
+
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Select Car Motors</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <?php echo getWallpaperStyle(); ?>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - AutoDrive</title>
+  <link rel="stylesheet" href="assets/css/login.css">
 </head>
 <body>
-  <?php include 'navigation.php'; ?>
-  
-  <div class="centered">
-    <form class="card-form" method="post">
-      <h2>Fazer login</h2>
-      
-      <?php if (isset($error)): ?>
-          <div style="background: rgba(239,68,68,0.1); color: #ef4444; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; border: 1px solid rgba(239,68,68,0.3);">
-              <?= htmlspecialchars($error) ?>
-          </div>
-      <?php endif; ?>
-      
-      <input type="text" name="username" placeholder="Usuário" required>
+  <div class="login-container">
+    <h1>Entrar na AutoDrive</h1>
+
+    <form action="processa_login.php" method="POST">
+      <input type="email" name="email" placeholder="E-mail" required>
       <input type="password" name="senha" placeholder="Senha" required>
-      <button class="btn btn-primary" type="submit">Entrar</button>
-      <p><a href="register.php">Não possui cadastro? Criar conta</a></p>
+      <button type="submit">Entrar</button>
     </form>
+
+    <p class="cadastro-link">
+      Ainda não tem conta? <a href="cadastro.php">Cadastre-se aqui</a>
+    </p>
+
+    <a href="index.php" class="btn-voltar">⬅ Voltar ao Início</a>
   </div>
 </body>
 </html>
