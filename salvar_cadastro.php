@@ -41,6 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
 
         exit;
+
+
+   /*O PDOException é uma classe de exceção específica para erros relacionados ao PDO (PHP Data Objects) a extensão do PHP para acesso a bancos de dados. */
     } catch (PDOException $e) {
         echo "<script>alert('Erro ao cadastrar: " . $e->getMessage() . "'); window.history.back();</script>";
         exit;

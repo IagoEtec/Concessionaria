@@ -1,6 +1,8 @@
 <?php if(isset($_GET['erro'])): ?>
   <script>alert('Login ou senha incorreto');</script>
 <?php endif; ?>
+<!-- O endif é uma maneira de fechar estruturas if no PHP, especialmente útil quando você está misturando PHP com HTML -->
+
 
 <!DOCTYPE html>
 <html lang="pt-br">

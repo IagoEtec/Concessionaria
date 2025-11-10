@@ -15,6 +15,8 @@
       <input type="email" name="email" placeholder="E-mail" required>
       <input type="password" name="senha" placeholder="Senha" required>
 
+
+<!--Essa linha de código cria um menu suspenso (dropdown) em um formulário HTML.-->
       <select name="tipo_conta" required>
         <option value="">Selecione o tipo de conta</option>
         <option value="cliente">Cliente</option>
