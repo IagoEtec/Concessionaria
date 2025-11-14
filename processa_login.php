@@ -1,28 +1,30 @@
 <?php
-    session_start();
+session_start();
 
-    include_once 'conexao.php';
-    
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+include_once 'conexao.php';
 
-    $consulta = "SELECT * FROM usuarios WHERE email = :email";
-    $stmt = $pdo->prepare($consulta);
-    $stmt->bindParam(':email', $email);
-    $stmt->execute();
+$email = $_POST['email'];
+$senha = $_POST['senha'];
 
-    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+$consulta = "SELECT * FROM usuarios WHERE email = :email";
+$stmt = $pdo->prepare($consulta);
+$stmt->bindParam(':email', $email);
+$stmt->execute();
 
-    // Verifica se o usuário existe e se a senha está correta
-    if ($resultado && password_verify($senha, $resultado['senha'])) {
-        $_SESSION['id'] = $resultado['id'];
-        $_SESSION['nome'] = $resultado['nome'];
-        $_SESSION['email'] = $resultado['email'];
-        header("Location: home.php");
-        exit;
-    } else {
-        echo "<script>alert('E-mail ou senha incorretos!'); window.history.back();</script>";
-        exit;
-    }
+$resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
+if ($resultado && password_verify($senha, $resultado['senha'])) {
+
+    $_SESSION['id']    = $resultado['id'];
+    $_SESSION['nome']  = $resultado['nome'];
+    $_SESSION['email'] = $resultado['email'];
+    $_SESSION['tipo']  = $resultado['tipo_conta']; // CONFIRA SE ESSE NOME EXISTE NO BANCO
+
+    header("Location: home.php");
+    exit;
+
+} else {
+    echo "<script>alert('E-mail ou senha incorretos!'); window.history.back();</script>";
+    exit;
+}
 ?>

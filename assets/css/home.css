@@ -124,3 +124,56 @@ footer {
   width: 100%;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
 }
+
+/* Botão de adicionar carro no menu */
+.btn-admin {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-admin:hover {
+    background-color: #0056b3;
+}
+
+/* Botões dentro dos cards (admin) */
+.btn-editar,
+.btn-excluir {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+/* Cor do botão Editar */
+.btn-editar {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.btn-editar:hover {
+    background-color: #e0a800;
+}
+
+/* Cor do botão Excluir */
+.btn-excluir {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-excluir:hover {
+    background-color: #b52a36;
+}
+
+/* Ajuste para alinhar os botões admin lado a lado */
+.car-card a {
+    margin-right: 8px;
+}
