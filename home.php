@@ -32,7 +32,7 @@ $tipo_usuario = $_SESSION['tipo']; // 'cliente' ou 'admin'
     <nav>
 
       <?php if ($tipo_usuario === 'admin'): ?>
-        <a href="adicionar_carro.php" class="btn-admin">Adicionar Carro</a>
+        <a href="adicionar.php" class="btn-admin">Adicionar Carro</a>
       <?php endif; ?>
 
       <a href="logout.php" class="btn-sair">Sair</a>
@@ -54,7 +54,7 @@ $tipo_usuario = $_SESSION['tipo']; // 'cliente' ou 'admin'
         <?php if ($tipo_usuario === 'cliente'): ?>
             <a href="agendamento.php?carro=Audi A4" class="btn-agendar">Agendar Test Drive</a>
         <?php else: ?>
-            <a href="editar_carro.php?id=1" class="btn-editar">Editar</a>
+            <a href="editar_veiculo.php?id=1" class="btn-editar">Editar</a>
             <a href="excluir_carro.php?id=1" class="btn-excluir" onclick="return confirm('Deseja excluir este carro?')">Excluir</a>
         <?php endif; ?>
       </div>
