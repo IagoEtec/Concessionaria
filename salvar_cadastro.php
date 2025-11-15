@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $senha = trim($_POST["senha"]);
     $tipo  = trim($_POST["tipo_conta"]);
 
+    // Veirifica se todos os campos estao preenchidos
     if (empty($nome) || empty($email) || empty($senha) || empty($tipo)) {
         echo "<script>alert('Por favor, preencha todos os campos.'); window.history.back();</script>";
         exit;
@@ -37,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute([$nome, $email, $senhaHash, $tipo]);
 
         $_SESSION['mensagem'] = "Cadastro realizado com sucesso!";
-        header("Location: login.php");
+        header("Location: home.php");
         exit;
 
         exit;
