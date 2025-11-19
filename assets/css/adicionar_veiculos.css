@@ -1,99 +1,117 @@
-/* Corpo geral */
-body {
+* {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #0f0f0f;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e0e0e0;
+    padding: 2rem;
 }
 
-/* Container principal */
 .container {
-    background: #1a1a1a;
-    padding: 40px 50px;
-    border-radius: 20px;
-    width: 420px;
-    box-shadow: 0 0 25px rgba(255, 77, 77, 0.15);
-    text-align: center;
+    background: linear-gradient(145deg, #1a1a2e 0%, #16213e 100%);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 1px solid #1e3a8a;
+    width: 100%;
+    max-width: 600px;
+    backdrop-filter: blur(10px);
 }
 
-/* Título */
 .container h2 {
-    margin-bottom: 25px;
-    color: #ff4d4d;
-    font-size: 1.8em;
-    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #3b82f6;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
-/* Labels */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 label {
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 0.5rem;
     display: block;
-    margin-top: 15px;
-    font-size: 0.95em;
-    color: #ccc;
-    text-align: left;
 }
 
-/* Inputs, selects e textarea */
-input,
-select,
-textarea {
+input, select, textarea {
+    padding: 1rem;
+    border: 2px solid #374151;
+    border-radius: 8px;
+    background-color: #111827;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
     width: 100%;
-    margin-top: 6px;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #333;
-    background: #111;
-    color: #fff;
+    font-family: inherit;
+}
+
+input:focus, select:focus, textarea:focus {
     outline: none;
-    font-size: 0.95em;
-    transition: 0.3s;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #ff4d4d;
-    box-shadow: 0 0 8px rgba(255, 77, 77, 0.4);
+input::placeholder, textarea::placeholder {
+    color: #9ca3af;
 }
 
-/* Botão Enviar */
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
 button {
-    margin-top: 25px;
-    width: 100%;
-    padding: 12px;
-    background: #ff4d4d;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     color: white;
+    padding: 1rem 2rem;
     border: none;
-    border-radius: 10px;
-    font-size: 1em;
-    font-weight: bold;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    margin-top: 1rem;
 }
 
 button:hover {
-    background: #e63946;
-    box-shadow: 0 0 12px rgba(255, 77, 77, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
-/* Botão Voltar */
 .btn-voltar {
     display: inline-block;
-    margin-top: 20px;
-    padding: 10px 18px;
+    text-align: center;
+    color: #9ca3af;
     text-decoration: none;
-    background: #333;
-    color: #fff;
-    border-radius: 10px;
-    font-weight: bold;
-    transition: 0.3s;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
 
 .btn-voltar:hover {
-    background: #444;
+    color: #3b82f6;
+    border-color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+img {
+    border-radius: 8px;
+    border: 2px solid #374151;
 }

@@ -52,7 +52,6 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <img src="uploads/<?php echo $v['imagem']; ?>" alt="<?php echo $v['modelo']; ?>">
 
             <h3><?php echo $v['modelo']; ?></h3>
-            <p><?php echo $v['descricao']; ?></p>
 
             <div class="acoes-card">
                 <?php if ($tipo_usuario === 'cliente'): ?>
