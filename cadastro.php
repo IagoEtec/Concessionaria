@@ -15,10 +15,11 @@
       <input type="email" name="email" placeholder="E-mail" required>
       <input type="password" name="senha" placeholder="Senha" required>
 
+      <!-- Codigo criado pelo grupo concessionária -->
       <select name="tipo_conta" required>
         <option value="">Selecione o tipo de conta</option>
         <option value="cliente">Cliente</option>
-        <option value="admin">Administrador</option>
+        <option value="admin">Administrador</option> 
       </select>
 
       <button type="submit">Cadastrar</button>

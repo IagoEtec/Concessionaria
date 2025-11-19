@@ -48,8 +48,6 @@ if (!$veiculo) {
         <label for="imagem">Trocar Imagem (opcional)</label>
         <input type="file" id="imagem" name="imagem" accept="image/*">
 
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao" name="descricao" rows="4" required><?php echo $veiculo['descricao']; ?></textarea>
 
         <button type="submit">Salvar Alterações</button>
     </form>
