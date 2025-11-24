@@ -1,99 +1,37 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Tempo de geração: 19/11/2025 às 20:51
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.2.4
+-- Arquivo da concessionária de veículos - Versão Corrigida
 
+-- Configurações iniciais do MySQL
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+-- Cria o banco de dados se não existir
+CREATE DATABASE IF NOT EXISTS `concessionaria` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `concessionaria`;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Banco de dados: `concessionaria`
---
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `admin`
---
-
-CREATE TABLE `admin` (
-  `ID_admin` int(11) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- Apaga tabelas velhas que não vamos usar mais
+DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `cliente`;
+DROP TABLE IF EXISTS `test_drive`;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cliente`
---
-
-CREATE TABLE `cliente` (
-  `ID_cliente` int(11) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `teste_drive`
---
-
-CREATE TABLE `teste_drive` (
-  `id` int(11) NOT NULL,
-  `tipo_veiculo` varchar(255) NOT NULL,
-  `modelo` varchar(255) NOT NULL,
-  `data` date NOT NULL,
-  `horario` time NOT NULL,
-  `status` enum('pendente','confirmado','cancelado','realizado') NOT NULL DEFAULT 'pendente',
-  `id_usuario` int(11) NOT NULL,
-  `id_veiculo` int(11) NOT NULL,
-  `data_agendamento` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `test_drive`
---
-
-CREATE TABLE `test_drive` (
-  `ID` int(11) NOT NULL,
-  `data` int(11) NOT NULL,
-  `horario` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `usuarios`
+-- Tabela dos usuários do sistema (clientes e administradores)
+-- Aqui guardamos todos que vão usar o sistema
 --
 
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(255) NOT NULL,
-  `tipo_conta` enum('cliente','admin') NOT NULL
+  `id` int(11) NOT NULL,  -- Número único pra cada usuário
+  `nome` varchar(255) NOT NULL,  -- Nome da pessoa
+  `email` varchar(255) NOT NULL,  -- Email pra login
+  `senha` varchar(255) NOT NULL,  -- Senha criptografada
+  `tipo_conta` enum('cliente','admin') NOT NULL  -- Se é cliente ou administrador
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `usuarios`
+-- Colocando alguns usuários de exemplo no sistema
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo_conta`) VALUES
@@ -104,151 +42,91 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo_conta`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `veiculo`
+-- Tabela dos veículos da concessionária
+-- Aqui a gente cadastra todos os carros e motos pra venda
 --
 
-CREATE TABLE `veiculo` (
-  `ID_veiculo` int(11) NOT NULL,
-  `modelo_carro` varchar(255) NOT NULL,
-  `modelo_moto` varchar(255) NOT NULL,
-  `marca_carro` varchar(255) NOT NULL,
-  `marca_moto` varchar(255) NOT NULL,
-  `disponibilidade` varchar(255) NOT NULL,
-  `ano` int(11) NOT NULL,
-  `imagem` varchar(255) NOT NULL
+CREATE TABLE `veiculos` (
+  `id` int(11) NOT NULL,  -- Número único pra cada veículo
+  `tipo` enum('carro','moto') NOT NULL,  -- Se é carro ou moto
+  `marca` varchar(255) NOT NULL,  -- Marca do veículo (Honda, Toyota, etc)
+  `modelo` varchar(255) NOT NULL,  -- Modelo do veículo (Civic, Corolla, etc)
+  `ano` int(11) NOT NULL,  -- Ano do veículo
+  `imagem` varchar(500) NOT NULL,  -- Foto do veículo
+  `descricao` text NOT NULL,  -- Descrição do veículo
+  `disponivel` tinyint(1) NOT NULL DEFAULT 1,  -- Se tá disponível pra venda (1 = sim, 0 = não)
+  `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp()  -- Data que cadastrou o veículo
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Cadastrando alguns veículos de exemplo
+--
+
+INSERT INTO `veiculos` (`id`, `tipo`, `marca`, `modelo`, `ano`, `imagem`, `descricao`, `disponivel`) VALUES
+(1, 'carro', 'Honda', 'Civic', 2023, 'civic.jpg', 'Carro esportivo com ótimo desempenho', 1),
+(2, 'carro', 'Toyota', 'Corolla', 2024, 'corolla.jpg', 'Carro familiar confortável', 1),
+(3, 'moto', 'Honda', 'CB 500', 2023, 'cb500.jpg', 'Moto ideal para cidade e estrada', 1);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `veiculos`
+-- Tabela dos agendamentos de test drive
+-- Aqui os clientes marcam quando querem testar os veículos
 --
 
-CREATE TABLE `veiculos` (
-  `id` int(11) NOT NULL,
-  `tipo` enum('carro','moto') NOT NULL,
-  `modelo` varchar(255) NOT NULL,
-  `imagem` varchar(500) NOT NULL,
-  `descricao` text NOT NULL,
-  `data_cadastro` timestamp NOT NULL DEFAULT current_timestamp()
+CREATE TABLE `test_drives` (
+  `id` int(11) NOT NULL,  -- Número único pra cada agendamento
+  `id_usuario` int(11) NOT NULL,  -- Qual usuário tá agendando (liga com a tabela usuarios)
+  `id_veiculo` int(11) NOT NULL,  -- Qual veículo ele quer testar (liga com a tabela veiculos)
+  `data_agendamento` date NOT NULL,  -- Data que ele marcou pro test drive
+  `horario_agendamento` time NOT NULL,  -- Horário que ele marcou
+  `status` enum('pendente','confirmado','cancelado','realizado') NOT NULL DEFAULT 'pendente',  -- Como tá o agendamento
+  `data_solicitacao` timestamp NOT NULL DEFAULT current_timestamp()  -- Quando ele fez o pedido
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Despejando dados para a tabela `veiculos`
+-- Aqui a gente configura as chaves primárias (as chaves principais das tabelas)
+-- É isso que faz cada registro ser único
 --
 
-INSERT INTO `veiculos` (`id`, `tipo`, `modelo`, `imagem`, `descricao`, `data_cadastro`) VALUES
-(1, 'carro', 'Honda Civic', 'civic.jpg', 'Carro esportivo com ótimo desempenho', '2025-11-19 18:11:58'),
-(2, 'carro', 'Toyota Corolla', 'corolla.jpg', 'Carro familiar confortável', '2025-11-19 18:11:58'),
-(3, 'moto', 'Honda CB 500', 'cb500.jpg', 'Moto ideal para cidade e estrada', '2025-11-19 18:11:58');
-
---
--- Índices para tabelas despejadas
---
-
---
--- Índices de tabela `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`ID_admin`);
-
---
--- Índices de tabela `cliente`
---
-ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`ID_cliente`);
-
---
--- Índices de tabela `teste_drive`
---
-ALTER TABLE `teste_drive`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`),
-  ADD KEY `id_veiculo` (`id_veiculo`);
-
---
--- Índices de tabela `test_drive`
---
-ALTER TABLE `test_drive`
-  ADD PRIMARY KEY (`ID`);
-
---
--- Índices de tabela `usuarios`
---
+-- Tabela usuarios
 ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`),  -- id é a chave principal
+  ADD UNIQUE KEY `email` (`email`);  -- email não pode repetir
 
---
--- Índices de tabela `veiculo`
---
-ALTER TABLE `veiculo`
-  ADD PRIMARY KEY (`ID_veiculo`);
-
---
--- Índices de tabela `veiculos`
---
+-- Tabela veiculos
 ALTER TABLE `veiculos`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);  -- id é a chave principal
+
+-- Tabela test_drives
+ALTER TABLE `test_drives`
+  ADD PRIMARY KEY (`id`),  -- id é a chave principal
+  ADD KEY `id_usuario` (`id_usuario`),  -- índice pra buscar rápido por usuário
+  ADD KEY `id_veiculo` (`id_veiculo`);  -- índice pra buscar rápido por veículo
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- Aqui a gente configura os auto incrementos
+-- Isso faz o número id aumentar automaticamente quando add novo registro
 --
 
---
--- AUTO_INCREMENT de tabela `admin`
---
-ALTER TABLE `admin`
-  MODIFY `ID_admin` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `cliente`
---
-ALTER TABLE `cliente`
-  MODIFY `ID_cliente` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `teste_drive`
---
-ALTER TABLE `teste_drive`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `test_drive`
---
-ALTER TABLE `test_drive`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `usuarios`
---
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;  -- Começa no 4 pq já temos 3 usuarios
 
---
--- AUTO_INCREMENT de tabela `veiculo`
---
-ALTER TABLE `veiculo`
-  MODIFY `ID_veiculo` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `veiculos`
---
 ALTER TABLE `veiculos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;  -- Começa no 4 pq já temos 3 veiculos
+
+ALTER TABLE `test_drives`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;  -- Começa no 1 pq não temos agendamentos ainda
 
 --
--- Restrições para tabelas despejadas
+-- Aqui a gente configura as relações entre as tabelas
+-- Isso garante que não vamos agendar test drive com usuário ou veículo que não existe
 --
 
---
--- Restrições para tabelas `teste_drive`
---
-ALTER TABLE `teste_drive`
-  ADD CONSTRAINT `teste_drive_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `teste_drive_ibfk_2` FOREIGN KEY (`id_veiculo`) REFERENCES `veiculos` (`id`) ON DELETE CASCADE;
+ALTER TABLE `test_drives`
+  ADD CONSTRAINT `test_drives_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `test_drives_ibfk_2` FOREIGN KEY (`id_veiculo`) REFERENCES `veiculos` (`id`) ON DELETE CASCADE;
+  -- ON DELETE CASCADE significa que se apagar usuário ou veículo, apaga os test drives também
+
+-- Finaliza a transação
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
