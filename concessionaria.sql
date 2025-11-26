@@ -1,4 +1,6 @@
--- phpMyAdmin SQL Dump
+-- comentado por Iago
+
+-- phpMyAdmin SQL Dump (é um arquivo de texto que contém comandos SQL para recriar a estrutura e/ou os dados de um banco de dados)
 -- Arquivo da concessionária de veículos - Versão Corrigida
 
 -- Configurações iniciais do MySQL
@@ -6,10 +8,21 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
--- Cria o banco de dados se não existir
+-- Cria o banco de dados se não existir 
+
+-- O que é utf8mb4? É uma codificação de caracteres de banco de dados que suporta o conjunto completo de caracteres Unicode) O utf8mb4 suporta todos os emojis e caracteres especiais, diferente do utf8 antigo.
+
+-- O que é Unicode? Padrão mundial de codificação de caracteres que atribui um número único a cada caractere, símbolo e emoji, independentemente da plataforma, programa ou idioma
+
+-- O que é utf8mb4_general_ci? É uma colação que determina as regras para ordenar e comparar strings (como em cláusulas ORDER BY e WHERE) usando o conjunto de caracteres utf8mb4
+
+-- O que faz (collation: colação/collate)? Define as regras de como os caracteres são ordenados e comparados
+
 CREATE DATABASE IF NOT EXISTS `concessionaria` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `concessionaria`;
 
+
+-- O que é DROP TABLE IF EXISTS? Apaga a tabela somente se ela existir no banco.
 -- Apaga tabelas velhas que não vamos usar mais
 DROP TABLE IF EXISTS `admin`;
 DROP TABLE IF EXISTS `cliente`;
@@ -20,7 +33,15 @@ DROP TABLE IF EXISTS `test_drive`;
 --
 -- Tabela dos usuários do sistema (clientes e administradores)
 -- Aqui guardamos todos que vão usar o sistema
---
+
+-- O que é ENGINE=InnoDB? é a instrução para especificar que o mecanismo de armazenamento a ser usado para uma tabela MySQL é o InnoDB, que oferece transações compatíveis com ACID, integridade referencial (chaves estrangeiras) e recuperação automática de falhas. Ele é o mecanismo de armazenamento padrão no MySQL e é ideal para tabelas dinâmicas, que sofrem muitas atualizações.
+
+-- O que é CHARSET=utf8mb4? É o conjunto de caracteres usado na tabela.
+
+-- O que é enum? É um tipo de dado onde você define uma lista fechada de valores permitidos.
+-- Ex: enum('cliente','admin') só aceita esses dois valores e impede valores inválidos.
+
+
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,  -- Número único pra cada usuário
@@ -45,6 +66,9 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `tipo_conta`) VALUES
 -- Tabela dos veículos da concessionária
 -- Aqui a gente cadastra todos os carros e motos pra venda
 --
+
+-- O que é current_timestamp? É um valor automático que guarda a data e hora exata no momento da inserção.
+-- Muito usado para registrar quando algo foi criado.
 
 CREATE TABLE `veiculos` (
   `id` int(11) NOT NULL,  -- Número único pra cada veículo
@@ -89,6 +113,12 @@ CREATE TABLE `test_drives` (
 -- É isso que faz cada registro ser único
 --
 
+-- O que é ADD UNIQUE KEY? Cria um campo que não pode ter valores duplicados.
+-- Ex: emails, CPFs, nomes de usuário etc.
+
+-- O que é ALTER TABLE? Comando usado para modificar uma tabela existente.
+-- Permite adicionar colunas, criar chaves, mudar tipos e muito mais.
+
 -- Tabela usuarios
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),  -- id é a chave principal
@@ -104,10 +134,10 @@ ALTER TABLE `test_drives`
   ADD KEY `id_usuario` (`id_usuario`),  -- índice pra buscar rápido por usuário
   ADD KEY `id_veiculo` (`id_veiculo`);  -- índice pra buscar rápido por veículo
 
---
+
 -- Aqui a gente configura os auto incrementos
 -- Isso faz o número id aumentar automaticamente quando add novo registro
---
+
 
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;  -- Começa no 4 pq já temos 3 usuarios
@@ -123,10 +153,31 @@ ALTER TABLE `test_drives`
 -- Isso garante que não vamos agendar test drive com usuário ou veículo que não existe
 --
 
+-- O que é test_drives_ibfk_1? É o nome automático da chave estrangeira criada no test_drives.
+-- Ele identifica a relação test_drives.id_veiculo → veiculos.id.
+
+-- O que é test_drives_ibfk_2? É o nome da outra chave estrangeira da tabela test_drives.
+-- Ele identifica a relação test_drives.id_veiculo → veiculos.id.
+
+-- O que é REFERENCES? É a parte do comando FOREIGN KEY que diz de qual tabela e coluna os dados devem vir.
+-- Ex: REFERENCES usuarios(id) garante que o id do usuário realmente exista.
+
 ALTER TABLE `test_drives`
   ADD CONSTRAINT `test_drives_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `test_drives_ibfk_2` FOREIGN KEY (`id_veiculo`) REFERENCES `veiculos` (`id`) ON DELETE CASCADE;
-  -- ON DELETE CASCADE significa que se apagar usuário ou veículo, apaga os test drives também
+-- O que é ON DELETE CASCADE? Ele significa que se apagar usuário ou veículo, apaga os test drives também
+
+-- O que é ADD CONSTRAINT? É usado para criar regras extras na tabela, como chaves estrangeiras e validações.
+-- Serve para impor integridade no banco de dados.
+-- Exemplo de ADD CONSTRAINT:
+-- Aqui criamos uma chave estrangeira ligando a coluna id_cliente
+-- da tabela pedidos com a coluna id da tabela clientes.
+-- Isso garante que só é possível cadastrar um pedido se o cliente existir.
+
+--ALTER TABLE `pedidos`
+--  ADD CONSTRAINT `pedidos_ibfk_1`
+--  FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`)
+--  ON DELETE CASCADE;
 
 -- Finaliza a transação
 COMMIT;
