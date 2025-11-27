@@ -28,6 +28,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="logo">AutoDrive</div>
 
     <nav>
+        <!-- Faz aparecer coisa diferente na tela caso esteja logado com adm -->
         <?php if ($tipo_usuario === 'admin'): ?>
             <a href="adicionar_veiculo.php" class="btn-admin">Adicionar Veículo</a>
         <?php endif; ?>
@@ -46,25 +47,40 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="carros-container">
 
-        <?php foreach ($veiculos as $v): ?>
-        <div class="car-card">
+<?php foreach ($veiculos as $v): ?> 
+    <div class="car-card">
 
-            <img src="uploads/<?php echo $v['imagem']; ?>" alt="<?php echo $v['modelo']; ?>">
+        <!-- Exibe a imagem do veículo, pegando o nome do arquivo salvo no banco -->
+        <img src="uploads/<?php echo $v['imagem']; ?>" alt="<?php echo $v['modelo']; ?>">
 
-            <h3><?php echo $v['modelo']; ?></h3>
+        <!-- Exibe o nome/modelo do veículo -->
+        <h3><?php echo $v['modelo']; ?></h3>
 
-            <div class="acoes-card">
-                <?php if ($tipo_usuario === 'cliente'): ?>
-                    <a href="agendamento.php?id=<?php echo $v['id']; ?>" class="btn-agendar">Agendar Test Drive</a>
+        <div class="acoes-card">
+            <?php if ($tipo_usuario === 'cliente'): ?>
+                
+                <!-- Se o usuário logado for um cliente, mostra apenas o botão de agendar -->
+                <a href="agendamento.php?id=<?php echo $v['id']; ?>" class="btn-agendar">
+                    Agendar Test Drive
+                </a>
 
-                <?php else: ?>
-                    <a href="editar_veiculo.php?id=<?php echo $v['id']; ?>" class="btn-editar">Editar</a>
-                    <a href="apagar_veiculo.php?id=<?php echo $v['id']; ?>" class="btn-excluir" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
-                <?php endif; ?>
-            </div>
+            <?php else: ?>
 
+                <!-- Se for admin, mostra botões de editar e excluir -->
+                <a href="editar_veiculo.php?id=<?php echo $v['id']; ?>" class="btn-editar">Editar</a>
+
+                <!-- Botão de excluir com confirmação no clique -->
+                <a href="apagar_veiculo.php?id=<?php echo $v['id']; ?>" class="btn-excluir"
+                   onclick="return confirm('Confirmar exclusão?')">
+                    Excluir
+                </a>
+
+            <?php endif; ?>
         </div>
-        <?php endforeach; ?>
+
+    </div>
+<?php endforeach; ?>
+
         
     </div>
 </main>

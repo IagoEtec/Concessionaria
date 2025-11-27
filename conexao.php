@@ -1,4 +1,6 @@
 <?php
+
+// Codigo base de conexao usando PDO 
 $host = 'localhost';
 $dbname = 'concessionaria';
 $user = 'root';

@@ -1,7 +1,14 @@
 <?php
 session_start();
+// Verifica se existe uma mensagem armazenada na sesao
 if (isset($_SESSION['mensagem'])) {
+  
+    // Exibe a mensagem em um alerta JavaScript
+    // O alerta aparece assim que a pagina e carregada
     echo "<script>alert('" . $_SESSION['mensagem'] . "');</script>";
+    echo "<script>alert('" . $_SESSION['mensagem'] . "');</script>";
+
+    // Remove a msg
     unset($_SESSION['mensagem']);
 }
 ?>

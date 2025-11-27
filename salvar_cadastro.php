@@ -12,6 +12,9 @@ if ($_POST) {
     $sql = "SELECT id FROM usuarios WHERE email = '$email'";
     $resultado = $pdo->query($sql);
     
+// Verifica se a consulta encontrou algum registro com o mesmo e-mail.
+// rowCount() retorna o número de linhas retornadas pela query.
+// Se for maior que 0, significa que o e-mail já existe no banco.
     if ($resultado->rowCount() > 0) {
         echo "<script>alert('Este e-mail já está cadastrado!'); window.history.back();</script>";
         exit;

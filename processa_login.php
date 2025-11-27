@@ -7,8 +7,12 @@ $senha = $_POST['senha'];
 
 $sql = "SELECT * FROM usuarios WHERE email = '$email'";
 $resultado = $pdo->query($sql);
+
+// Busca a primeira linha retornada pela consulta
+// Se nao existir usuario com esse e-mail o resultado sera false
 $usuario = $resultado->fetch();
 
+// Verifica o usuarrio foi encontrado e se a senha digita eh igual a um hash salvo no bd
 if ($usuario && password_verify($senha, $usuario['senha'])) {
     $_SESSION['id'] = $usuario['id'];
     $_SESSION['nome'] = $usuario['nome'];

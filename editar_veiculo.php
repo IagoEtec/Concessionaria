@@ -1,16 +1,23 @@
 <?php
 require 'conexao.php';
 
+// Verifica se tem o ID
 if (!isset($_GET['id'])) {
     die("ID não informado.");
 }
 
 $id = $_GET['id'];
 
+// Prepara a consulta SQL para buscar o veículo correspondente ao ID
+// O uso de :id impede SQL Injection, pois o valor será tratado de forma segura
 $stmt = $pdo->prepare("SELECT * FROM veiculos WHERE id = :id");
 $stmt->execute([":id" => $id]);
+
+// Busca o resultado da consulta como um array associativo (chaves iguais ao nome das colunas)
+// Se nenhum veículo existir com esse ID, o resultado será false
 $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Se nao encontrar nenhum veiculo encerra o script e manda um aviso
 if (!$veiculo) {
     die("Veículo não encontrado.");
 }

@@ -15,10 +15,14 @@ $veiculo_id = $_GET['id'];
 
 // Busca veículo
 $sql = "SELECT * FROM veiculos WHERE id = $veiculo_id";
+// consulta sql no banco de dados usando PDO
 $resultado = $pdo->query($sql);
+// pega o resultado da primeira linha e usa o fetch p retornar como array associativo
 $veiculo = $resultado->fetch();
 
+// Verifica se encontrou algm veiculo no banco
 if (!$veiculo) {
+    // encerra execução e mostra msg de erro
     die("Veículo não encontrado.");
 }
 
