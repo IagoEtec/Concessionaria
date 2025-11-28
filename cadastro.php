@@ -9,7 +9,7 @@
 <body>
   <div class="cadastro-container">
     <h1>Criar Conta</h1>
-
+    <!-- Coleta dados pessoais (nome, e-mail, senha) para criar nova conta no sistema, os dados são enviados via POST para salvar_cadastro.php que processa o registro. Required torna os campos obrigatórios e inclue validação de e-mail -->
     <form action="salvar_cadastro.php" method="POST">
       <input type="text" name="nome" placeholder="Nome completo" required>
       <input type="email" name="email" placeholder="E-mail" required>
