@@ -1,35 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cadastro - AutoDrive</title>
-  <link rel="stylesheet" href="assets/css/cadastro.css">
-</head>
-<body>
-  <div class="cadastro-container">
+
+
+<!-- Link para o arquivo CSS específico desta página -->
+<link rel="stylesheet" href="assets/css/cadastro.css">
+
+<!-- Container principal do formulário de cadastro -->
+<div class="cadastro-container">
     <h1>Criar Conta</h1>
-    <!-- Coleta dados pessoais (nome, e-mail, senha) para criar nova conta no sistema, os dados são enviados via POST para salvar_cadastro.php que processa o registro. Required torna os campos obrigatórios e inclue validação de e-mail -->
+    
+    <!-- Formulário de cadastro que envia dados para salvar_cadastro.php -->
     <form action="salvar_cadastro.php" method="POST">
-      <input type="text" name="nome" placeholder="Nome completo" required>
-      <input type="email" name="email" placeholder="E-mail" required>
-      <input type="password" name="senha" placeholder="Senha" required>
+        <!-- Campo para nome completo do usuário -->
+        <input type="text" name="nome" placeholder="Nome completo" required>
+        <!-- Campo para email com validação nativa do tipo email -->
+        <input type="email" name="email" placeholder="E-mail" required>
+        <!-- Campo para senha que oculta os caracteres digitados -->
+        <input type="password" name="senha" placeholder="Senha" required>
 
-      <!-- Codigo criado pelo grupo concessionária -->
-      <select name="tipo_conta" required>
-        <option value="">Selecione o tipo de conta</option>
-        <option value="cliente">Cliente</option>
-        <option value="admin">Administrador</option> 
-      </select>
+        <!-- Select para escolher o tipo de conta -->
+        <select name="tipo_conta" required>
+            <option value="">Selecione o tipo de conta</option>
+            <option value="cliente">Cliente</option>
+            <option value="admin">Administrador</option> 
+        </select>
 
-      <button type="submit">Cadastrar</button>
+        <!-- Botão para submeter o formulário de cadastro -->
+        <button type="submit">Cadastrar</button>
     </form>
 
+    <!-- Link para página de login para usuários já cadastrados -->
     <p class="login-link">
-      Já tem uma conta? <a href="login.php">Faça login</a>
+        Já tem uma conta? <a href="login.php">Faça login</a>
     </p>
 
+    <!-- Link para voltar à página inicial -->
     <a href="index.php" class="btn-voltar">⬅ Voltar ao Início</a>
-  </div>
-</body>
-</html>
+</div>

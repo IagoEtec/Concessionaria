@@ -1,5 +1,5 @@
 <?php
-session_start();
+// Remove session_start() daqui e deixa apenas no header
 require_once 'conexao.php';
 
 $email = $_POST['email'];
@@ -8,12 +8,14 @@ $senha = $_POST['senha'];
 $sql = "SELECT * FROM usuarios WHERE email = '$email'";
 $resultado = $pdo->query($sql);
 
-// Busca a primeira linha retornada pela consulta
-// Se nao existir usuario com esse e-mail o resultado sera false
 $usuario = $resultado->fetch();
 
-// Verifica o usuarrio foi encontrado e se a senha digita eh igual a um hash salvo no bd
 if ($usuario && password_verify($senha, $usuario['senha'])) {
+    // A sessão já foi iniciada pelo header, então podemos usar $_SESSION diretamente
+    // Mas precisamos iniciar a sessão aqui também para garantir
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     $_SESSION['id'] = $usuario['id'];
     $_SESSION['nome'] = $usuario['nome'];
     $_SESSION['email'] = $usuario['email'];

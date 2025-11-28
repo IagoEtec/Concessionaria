@@ -1,26 +1,48 @@
 <?php
+// Arquivo para processar o cadastro de novos veículos
 require 'conexao.php';
 
-// Dados do formulário
-$tipo = $_POST['tipo_veiculo'];
-$modelo = $_POST['modelo'];
-
-// Upload da imagem
-$imagem_nome = "veiculo_" . time() . ".jpg";
-
-if (move_uploaded_file($_FILES['imagem']['tmp_name'], "uploads/$imagem_nome")) {
+// Verifica se o formulário foi submetido
+if ($_POST) {
     
-    // SQL corrigido - usando 'tipo' em vez de 'tipo_veiculo'
-    $sql = "INSERT INTO veiculos (tipo, modelo, imagem) 
-            VALUES ('$tipo', '$modelo', '$imagem_nome')";
-    
-    if ($pdo->query($sql)) {
-        header("Location: home.php");
+    // Captura os dados do formulário
+    $tipo = $_POST['tipo_veiculo'];    // Tipo do veículo (carro/moto)
+    $marca = $_POST['marca'];          // Marca do veículo
+    $modelo = $_POST['modelo'];        // Modelo do veículo
+    $ano = $_POST['ano'];              // Ano do veículo
+    $descricao = $_POST['descricao'];  // Descrição do veículo
+
+    // Processa o upload da imagem
+    // Gera um nome único para evitar sobrescrita de arquivos
+    $imagem_nome = "veiculo_" . time() . "_" . uniqid() . ".jpg";
+
+    // Move o arquivo enviado para a pasta uploads
+    if (move_uploaded_file($_FILES['imagem']['tmp_name'], "uploads/$imagem_nome")) {
+        
+        // Prepara a query SQL usando prepared statements para segurança
+        $sql = $pdo->prepare("INSERT INTO veiculos (tipo, marca, modelo, ano, descricao, imagem) 
+                VALUES (:tipo, :marca, :modelo, :ano, :descricao, :imagem)");
+        
+        // Executa a query com os parâmetros
+        if ($sql->execute([
+            ':tipo' => $tipo,
+            ':marca' => $marca,
+            ':modelo' => $modelo,
+            ':ano' => $ano,
+            ':descricao' => $descricao,
+            ':imagem' => $imagem_nome
+        ])) {
+            // Redireciona para a home em caso de sucesso
+            header("Location: home.php");
+            exit;
+        } else {
+            echo "Erro ao cadastrar veículo: " . implode(", ", $sql->errorInfo());
+        }
+        
     } else {
-        echo "Erro: " . $pdo->errorInfo()[2];
+        echo "Erro no upload da imagem. Verifique a pasta 'uploads' e permissões.";
     }
-    
 } else {
-    echo "Erro no upload da imagem. Verifique a pasta 'uploads'.";
+    echo "Formulário não submetido.";
 }
 ?>

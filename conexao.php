@@ -1,15 +1,28 @@
 <?php
+// Arquivo de conexão com o banco de dados MySQL usando PDO
+// Este arquivo estabelece a comunicação entre o PHP e o banco de dados
 
-// estabelece uma conexão com o mySQL usando PDO (PHP Data Objects em qualquer cas), configura acesso ao banco da concessionaria no servidor local com usuário root e fazzendo uso try/catch para tratamento de erros que vai exibir uma mensagem no caso de falhar.
-$host = 'localhost';
-$dbname = 'concessionaria';
-$user = 'root';
-$pass = '';
+// Configurações de acesso ao banco de dados
+$host = 'localhost';      // Endereço do servidor do banco de dados (local)
+$dbname = 'concessionaria'; // Nome do banco de dados que será utilizado
+$user = 'root';           // Usuário do banco de dados (padrão do XAMPP)
+$pass = '';               // Senha do banco de dados (vazia no XAMPP padrão)
 
+// Bloco try-catch para tratamento de erros na conexão
 try {
+    // Cria uma nova instância PDO para conexão com MySQL
+    // PDO (PHP Data Objects) é uma interface para acesso a bancos de dados
+    // DSN (Data Source Name): string de conexão com formato "mysql:host=...;dbname=..."
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+    
+    // Configura o PDO para lançar exceções em caso de erro
+    // Isso facilita o debug e tratamento de erros
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 } catch (PDOException $e) {
+    // Captura e exibe qualquer erro que ocorrer durante a conexão
+    // PDOException é a classe específica para erros do PDO
     echo "Erro na conexão: " . $e->getMessage();
+    // getMessage() retorna a mensagem de erro descritiva
 }
-
 ?>

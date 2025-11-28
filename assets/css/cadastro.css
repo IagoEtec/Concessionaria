@@ -25,7 +25,8 @@ body {
   align-items: center;
   justify-content: center;
   color: var(--text-light);
-  padding: 1rem;
+  padding: 1.5rem;
+  line-height: 1.7;
 }
 
 @keyframes fadeInUp {
@@ -52,77 +53,82 @@ body {
 
 .cadastro-container {
   background: var(--medium-gray);
-  padding: 3rem 2.5rem;
-  border-radius: 16px;
+  padding: 3.5rem 3rem;
+  border-radius: 20px;
   border: 1px solid var(--light-gray);
   width: 100%;
-  max-width: 480px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
+  max-width: 520px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
   animation: fadeInUp 0.6s ease-out;
 }
 
 .cadastro-container h1 {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   color: var(--primary-orange);
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 700;
   animation: slideIn 0.8s ease-out;
+  letter-spacing: -0.5px;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
+  gap: 2.2rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 label {
   font-weight: 600;
   color: var(--text-light);
-  font-size: 1rem;
+  font-size: 1.05rem;
+  margin-bottom: 0.3rem;
 }
 
 input, select {
-  padding: 1.2rem;
-  border: 1px solid var(--light-gray);
-  border-radius: 8px;
+  padding: 1.3rem 1.5rem;
+  border: 1.5px solid var(--light-gray);
+  border-radius: 10px;
   background: var(--dark-gray);
   color: var(--text-light);
-  font-size: 1rem;
+  font-size: 1.05rem;
   transition: var(--transition);
+  font-family: inherit;
 }
 
 input:focus, select:focus {
   outline: none;
   border-color: var(--primary-orange);
-  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.15);
+  transform: translateY(-3px);
 }
 
 input::placeholder {
   color: var(--text-muted);
+  opacity: 0.8;
 }
 
 button {
   background: linear-gradient(135deg, var(--primary-orange) 0%, var(--orange-dark) 100%);
   color: white;
-  padding: 1.2rem;
+  padding: 1.4rem 2rem;
   border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   position: relative;
   overflow: hidden;
+  letter-spacing: 0.5px;
 }
 
 button::before {
@@ -132,8 +138,8 @@ button::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.6s;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 0.7s;
 }
 
 button:hover::before {
@@ -141,31 +147,33 @@ button:hover::before {
 }
 
 button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(255, 107, 53, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(255, 107, 53, 0.5);
 }
 
 .login-link {
   text-align: center;
-  margin: 2rem 0 1rem;
+  margin: 2.5rem 0 1.5rem;
   color: var(--text-muted);
+  font-size: 1.05rem;
 }
 
 .login-link a {
   color: var(--primary-orange);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
   transition: var(--transition);
   position: relative;
+  padding: 0.3rem 0;
 }
 
 .login-link a::after {
   content: '';
   position: absolute;
-  bottom: -2px;
+  bottom: -1px;
   left: 0;
   width: 0;
-  height: 1px;
+  height: 2px;
   background: var(--primary-orange);
   transition: var(--transition);
 }
@@ -183,28 +191,47 @@ button:hover {
   text-align: center;
   color: var(--text-muted);
   text-decoration: none;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   transition: var(--transition);
-  padding: 0.8rem;
-  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border: 1.5px solid transparent;
+  font-weight: 500;
 }
 
 .btn-voltar:hover {
   color: var(--primary-orange);
   background: rgba(255, 107, 53, 0.1);
+  border-color: var(--primary-orange);
+  transform: translateX(-5px);
 }
 
 @media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+  
   .cadastro-container {
-      padding: 2rem 1.5rem;
-      margin: 1rem;
+    padding: 2.5rem 2rem;
+    margin: 1rem;
+    border-radius: 16px;
   }
   
   .cadastro-container h1 {
-      font-size: 1.8rem;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  form {
+    gap: 1.8rem;
   }
   
   input, select, button {
-      padding: 1rem;
+    padding: 1.2rem;
+    font-size: 1rem;
+  }
+  
+  .login-link {
+    margin: 2rem 0 1.2rem;
   }
 }

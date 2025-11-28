@@ -104,7 +104,7 @@ CREATE TABLE `test_drives` (
   `id_veiculo` int(11) NOT NULL,  -- Qual veículo ele quer testar (liga com a tabela veiculos)
   `data_agendamento` date NOT NULL,  -- Data que ele marcou pro test drive
   `horario_agendamento` time NOT NULL,  -- Horário que ele marcou
-  `status` enum('pendente','confirmado','cancelado','realizado') NOT NULL DEFAULT 'pendente',  -- Como tá o agendamento
+  `status` enum('pendente','confirmado','cancelado','realizado','negado') NOT NULL DEFAULT 'pendente',  -- Como tá o agendamento (atualizado com 'negado')
   `data_solicitacao` timestamp NOT NULL DEFAULT current_timestamp()  -- Quando ele fez o pedido
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -166,18 +166,6 @@ ALTER TABLE `test_drives`
   ADD CONSTRAINT `test_drives_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `test_drives_ibfk_2` FOREIGN KEY (`id_veiculo`) REFERENCES `veiculos` (`id`) ON DELETE CASCADE;
 -- O que é ON DELETE CASCADE? Ele significa que se apagar usuário ou veículo, apaga os test drives também
-
--- O que é ADD CONSTRAINT? É usado para criar regras extras na tabela, como chaves estrangeiras e validações.
--- Serve para impor integridade no banco de dados.
--- Exemplo de ADD CONSTRAINT:
--- Aqui criamos uma chave estrangeira ligando a coluna id_cliente
--- da tabela pedidos com a coluna id da tabela clientes.
--- Isso garante que só é possível cadastrar um pedido se o cliente existir.
-
-ALTER TABLE `pedidos`
- ADD CONSTRAINT `pedidos_ibfk_1`
- FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`)
- ON DELETE CASCADE;
 
 -- Finaliza a transação
 COMMIT;

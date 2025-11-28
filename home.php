@@ -1,96 +1,115 @@
 <?php
-session_start();
+// Inclui o cabeçalho que já inicia a sessão
+include 'includes/header.php';
+
+// Inclui o arquivo de conexão com o banco de dados
 require_once 'conexao.php';
 
-// Verifica login
+// Verifica se o usuário está logado (se existe ID na sessão)
 if (!isset($_SESSION['id'])) {
+    // Se não estiver logado, redireciona para página de login
     header("Location: login.php");
     exit;
 }
 
+// Armazena o tipo de usuário (cliente ou admin) para controle de acesso
 $tipo_usuario = $_SESSION['tipo'];
 
-// Buscar veículos no banco
+// Buscar veículos no banco de dados
 $sql = "SELECT * FROM veiculos ORDER BY id DESC";
 $stmt = $pdo->query($sql);
-// $stmt é a variável que armazena um objeto do tipo PDOStatement que é o resultado do prepare()
 $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>AutoDrive - Veículos</title>
-    <link rel="stylesheet" href="assets/css/home.css">
-</head>
-<body>
 
-<header class="header">
-    <div class="logo">AutoDrive</div>
+<!-- Link para o arquivo CSS específico desta página -->
+<link rel="stylesheet" href="assets/css/home.css">
 
-    <nav>
-        <!-- Faz aparecer coisa diferente na tela caso esteja logado com adm -->
-        <?php if ($tipo_usuario === 'admin'): ?>
-            <a href="adicionar_veiculo.php" class="btn-admin">Adicionar Veículo</a>
-        <!-- edif é uma sintaxe alternativa do PHP para fechar estruturas if quando misturadas com html -->
-        <?php endif; ?>
-
-        <a href="logout.php" class="btn-sair">Sair</a>
-    </nav>
-</header>
-
+<!-- Seção banner com título e descrição -->
 <section class="banner">
     <h1>Escolha seu próximo Test Drive</h1>
     <p>Os melhores veículos selecionados especialmente para você.</p>
 </section>
 
+<!-- Conteúdo principal da página -->
 <main>
     <h2 class="titulo-home">Veículos Disponíveis</h2>
 
+    <!-- Container dos cards de veículos -->
     <div class="carros-container">
 
-<?php foreach ($veiculos as $v): ?> 
-    <div class="car-card">
+    <?php foreach ($veiculos as $v): ?> 
+        <!-- Início do loop que gera um card para cada veículo -->
+        <div class="car-card">
 
-        <!-- Exibe a imagem do veículo, pegando o nome do arquivo salvo no banco -->
-        <img src="uploads/<?php echo $v['imagem']; ?>" alt="<?php echo $v['modelo']; ?>">
+            <!-- Imagem do veículo -->
+            <img src="uploads/<?php echo $v['imagem']; ?>" alt="<?php echo $v['modelo']; ?>">
 
-        <!-- Exibe o nome/modelo do veículo -->
-        <h3><?php echo $v['modelo']; ?></h3>
+            <!-- Informações do veículo -->
+            <div class="info-veiculo">
+                <h3><?php echo $v['modelo']; ?></h3>
+                <p class="marca"><strong>Marca:</strong> <?php echo $v['marca']; ?></p>
+                <p class="ano"><strong>Ano:</strong> <?php echo $v['ano']; ?></p>
+                <p class="tipo"><strong>Tipo:</strong> <?php echo ucfirst($v['tipo']); ?></p>
+            </div>
 
-        <div class="acoes-card">
+            <!-- Botão de disponibilidade do veículo -->
+            <div class="status-veiculo">
+                <?php if ($v['disponivel'] == 1): ?>
+                    <!-- Veículo disponível - botão verde -->
+                    <button class="btn-disponivel">
+                        Disponível
+                    </button>
+                <?php else: ?>
+                    <!-- Veículo indisponível - botão vermelho -->
+                    <button class="btn-indisponivel">
+                        Indisponível
+                    </button>
+                <?php endif; ?>
+            </div>
+
+            <!-- Área de ações (botões) do card -->
+            <div class="acoes-card">
+
             <?php if ($tipo_usuario === 'cliente'): ?>
-                
-                <!-- Se o usuário logado for um cliente, mostra apenas o botão de agendar -->
-                <a href="agendamento.php?id=<?php echo $v['id']; ?>" class="btn-agendar">
-                    Agendar Test Drive
-                </a>
+                <!-- Ações para clientes -->
+
+                <?php if ($v['disponivel'] == 1): ?>
+                    <!-- Se veículo disponível, mostra botão para agendar -->
+                    <a href="agendamento.php?id=<?php echo $v['id']; ?>" class="btn-agendar">
+                        Agendar Test Drive
+                    </a>
+                <?php else: ?>
+                    <!-- Se veículo indisponível, mostra botão desabilitado -->
+                    <button class="btn-desabilitado" disabled>
+                        Indisponível para agendar
+                    </button>
+                <?php endif; ?>
 
             <?php else: ?>
+                <!-- Ações para administradores -->
 
-                <!-- Se for admin, mostra botões de editar e excluir -->
+                <!-- Botão para editar veículo -->
                 <a href="editar_veiculo.php?id=<?php echo $v['id']; ?>" class="btn-editar">Editar</a>
 
-                <!-- Botão de excluir com confirmação no clique -->
+                <!-- Botão para excluir veículo com confirmação JavaScript -->
                 <a href="apagar_veiculo.php?id=<?php echo $v['id']; ?>" class="btn-excluir"
-                   onclick="return confirm('Confirmar exclusão?')">
+                    onclick="return confirm('Confirmar exclusão?')">
                     Excluir
                 </a>
 
             <?php endif; ?>
+
+            </div>
+
         </div>
+        <!-- Fim do card do veículo -->
+    <?php endforeach; ?>
 
     </div>
-<?php endforeach; ?>
-
-        
-    </div>
+    <!-- Fim do container de veículos -->
 </main>
 
-<footer>
-    <p>© 2025 AutoDrive - Todos os direitos reservados.</p>
-</footer>
-
-</body>
-
-</html>
+<?php
+// Inclui o rodapé da página
+include 'includes/footer.php';
+?>

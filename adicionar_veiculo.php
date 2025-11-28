@@ -1,37 +1,52 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Veículos</title>
-    <link rel="stylesheet" href="assets/css/adicionar_veiculos.css">
-</head>
-<body>
-    <div class="container">
-        <h2>Cadastro de Veículo</h2>
+<?php
+// Inclui o cabeçalho que já inicia a sessão
+include 'includes/header.php';
 
-        <form action="salvar_veiculo.php" method="POST" enctype="multipart/form-data">
-            
-            <label for="tipo_veiculo">Tipo de Veículo</label>
-            <select id="tipo_veiculo" name="tipo_veiculo" required>
-                <option value="">Selecione</option>
-                <option value="carro">Carro</option>
-                <option value="moto">Moto</option>
-            </select>
+// Verifica se usuário é administrador
+if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 'admin') {
+    die("Acesso negado. Apenas administradores podem adicionar veículos.");
+}
+?>
 
-            <label for="modelo">Modelo</label>
-            <input type="text" id="modelo" name="modelo" placeholder="Ex: Honda Civic" required>
+<!-- Link para o arquivo CSS específico desta página -->
+<link rel="stylesheet" href="assets/css/adicionar_veiculos.css">
 
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" name="descricao" rows="4" placeholder="Escreva uma descrição do veículo..." required></textarea>
+<!-- Container principal do formulário -->
+<div class="container">
+    <h2>Cadastro de Veículo</h2>
 
-            <label for="imagem">Imagem do Veículo</label>
-            <input type="file" id="imagem" name="imagem" accept="image/*" required>
+    <!-- Formulário para cadastrar novo veículo -->
+    <form action="salvar_veiculo.php" method="POST" enctype="multipart/form-data">
+        
+        <label for="tipo_veiculo">Tipo de Veículo</label>
+        <select id="tipo_veiculo" name="tipo_veiculo" required>
+            <option value="">Selecione</option>
+            <option value="carro">Carro</option>
+            <option value="moto">Moto</option>
+        </select>
 
-            <button type="submit">Enviar</button>
-        </form>
+        <label for="marca">Marca</label>
+        <input type="text" id="marca" name="marca" placeholder="Ex: Honda" required>
 
-        <a href="home.php" class="btn-voltar">Voltar</a>
-    </div>
-</body>
-</html>
+        <label for="modelo">Modelo</label>
+        <input type="text" id="modelo" name="modelo" placeholder="Ex: Civic" required>
+
+        <label for="ano">Ano</label>
+        <input type="number" id="ano" name="ano" placeholder="Ex: 2023" min="1900" max="2030" required>
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" placeholder="Descrição do veículo" required></textarea>
+
+        <label for="imagem">Imagem do Veículo</label>
+        <input type="file" id="imagem" name="imagem" accept="image/*" required>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <a href="home.php" class="btn-voltar">Voltar</a>
+</div>
+
+<?php
+// Inclui o rodapé da página
+include 'includes/footer.php';
+?>

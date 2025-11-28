@@ -21,7 +21,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--primary-black);
     color: var(--text-light);
-    line-height: 1.6;
+    line-height: 1.7;
     min-height: 100vh;
 }
 
@@ -61,61 +61,64 @@ body {
 
 /* Header */
 .header {
-    background: rgba(10, 10, 10, 0.95);
-    padding: 1.2rem 2rem;
+    background: rgba(10, 10, 10, 0.97);
+    padding: 1.5rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--light-gray);
-    backdrop-filter: blur(10px);
+    border-bottom: 1.5px solid var(--light-gray);
+    backdrop-filter: blur(15px);
     position: sticky;
     top: 0;
     z-index: 1000;
     animation: slideDown 0.5s ease-out;
+    gap: 2rem;
 }
 
 .header .logo {
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 800;
     color: var(--primary-orange);
     text-decoration: none;
     transition: var(--transition);
+    letter-spacing: -0.5px;
 }
 
 .header .logo:hover {
     color: var(--orange-light);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 .header nav {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.8rem;
     align-items: center;
 }
 
 .btn-admin, .btn-sair {
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    padding: 1rem 1.8rem;
+    border-radius: 10px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     transition: var(--transition);
     border: none;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 1rem;
     position: relative;
     overflow: hidden;
+    letter-spacing: 0.3px;
 }
 
 .btn-admin {
     background: linear-gradient(135deg, var(--primary-orange) 0%, var(--orange-dark) 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .btn-sair {
     background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
 }
 
 .btn-admin::before, .btn-sair::before {
@@ -125,8 +128,8 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.6s;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: left 0.7s;
 }
 
 .btn-admin:hover::before, .btn-sair:hover::before {
@@ -134,138 +137,212 @@ body {
 }
 
 .btn-admin:hover, .btn-sair:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.6);
 }
 
 /* Banner */
 .banner {
-    background: linear-gradient(rgba(10, 10, 10, 0.9), rgba(26, 26, 26, 0.95));
-    padding: 4rem 2rem;
+    background: linear-gradient(rgba(10, 10, 10, 0.92), rgba(26, 26, 26, 0.97));
+    padding: 5rem 2.5rem;
     text-align: center;
-    border-bottom: 1px solid var(--light-gray);
+    border-bottom: 1.5px solid var(--light-gray);
     animation: fadeInUp 0.8s ease-out;
 }
 
 .banner h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
     color: white;
     background: linear-gradient(135deg, #fff 0%, var(--orange-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
 }
 
 .banner p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--text-muted);
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
     line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+/* Status Agendamentos */
+.status-agendamentos {
+    background: var(--medium-gray);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border: 1.5px solid var(--light-gray);
+    margin: 2rem auto 0;
+    max-width: 600px;
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.status-agendamentos h3 {
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    margin: 0.3rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1.5px solid;
+}
+
+.status-badge.pendente {
+    background: #ffd96622;
+    color: #ffdd77;
+    border-color: #ffdd77;
+}
+
+.status-badge.confirmado {
+    background: #28a74522;
+    color: #32ff83;
+    border-color: #32ff83;
 }
 
 /* Main Content */
 main {
-    padding: 3rem 2rem;
-    max-width: 1200px;
+    padding: 4rem 2.5rem;
+    max-width: 1300px;
     margin: 0 auto;
 }
 
 .titulo-home {
     text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
+    font-size: 2.8rem;
+    margin-bottom: 4rem;
     color: var(--primary-orange);
-    font-weight: 700;
+    font-weight: 800;
     animation: fadeInUp 0.8s ease-out;
+    letter-spacing: -0.5px;
 }
 
 .carros-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 3rem;
     animation: fadeInUp 1s ease-out;
 }
 
 .car-card {
     background: var(--medium-gray);
-    border-radius: 16px;
+    border-radius: 20px;
     overflow: hidden;
     transition: var(--transition);
-    border: 1px solid var(--light-gray);
+    border: 1.5px solid var(--light-gray);
     position: relative;
 }
 
 .car-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
     border-color: var(--primary-orange);
 }
 
 .car-card img {
     width: 100%;
-    height: 250px;
+    height: 280px;
     object-fit: cover;
     transition: var(--transition);
-    border-bottom: 1px solid var(--light-gray);
+    border-bottom: 1.5px solid var(--light-gray);
 }
 
 .car-card:hover img {
-    transform: scale(1.08);
+    transform: scale(1.1);
+}
+
+/* Informações do Veículo */
+.info-veiculo {
+    padding: 2rem 2rem 1rem;
 }
 
 .car-card h3 {
-    padding: 1.5rem 1.5rem 0.5rem;
     color: var(--primary-orange);
-    font-size: 1.4rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.3px;
 }
 
 .car-card p {
-    padding: 0 1.5rem 1.5rem;
     color: var(--text-muted);
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+    font-size: 1.05rem;
+}
+
+.car-card p strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Botão de Disponibilidade */
+.status-veiculo {
+    padding: 0 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.status-veiculo button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    width: 100%;
 }
 
 .acoes-card {
-    padding: 0 1.5rem 1.5rem;
+    padding: 0 2rem 2rem;
     display: flex;
-    gap: 1rem;
+    gap: 1.2rem;
 }
 
 .btn-agendar, .btn-editar, .btn-excluir {
-    padding: 0.8rem 1.2rem;
-    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     transition: var(--transition);
     flex: 1;
     text-align: center;
     border: none;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     position: relative;
     overflow: hidden;
+    letter-spacing: 0.3px;
 }
 
 .btn-agendar {
     background: linear-gradient(135deg, var(--primary-orange) 0%, var(--orange-dark) 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .btn-editar {
     background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
 }
 
 .btn-excluir {
     background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
     color: white;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
 }
 
 .btn-agendar::before, .btn-editar::before, .btn-excluir::before {
@@ -275,8 +352,8 @@ main {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.6s;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: left 0.7s;
 }
 
 .btn-agendar:hover::before, .btn-editar:hover::before, .btn-excluir:hover::before {
@@ -284,18 +361,19 @@ main {
 }
 
 .btn-agendar:hover, .btn-editar:hover, .btn-excluir:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 107, 53, 0.6);
 }
 
 /* Footer */
 footer {
     background: var(--primary-black);
     text-align: center;
-    padding: 3rem 2rem;
-    border-top: 1px solid var(--light-gray);
+    padding: 4rem 2.5rem;
+    border-top: 1.5px solid var(--light-gray);
     color: var(--text-muted);
-    margin-top: 3rem;
+    margin-top: 4rem;
+    font-size: 1.1rem;
 }
 
 /* Responsive */
@@ -303,17 +381,21 @@ footer {
     .header {
         flex-direction: column;
         gap: 1.5rem;
-        padding: 1rem;
+        padding: 1.5rem;
     }
     
     .header nav {
         flex-direction: column;
         width: 100%;
-        gap: 1rem;
+        gap: 1.2rem;
+    }
+    
+    .banner {
+        padding: 3rem 1.5rem;
     }
     
     .banner h1 {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
     }
     
     .banner p {
@@ -322,27 +404,32 @@ footer {
     
     .carros-container {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
     }
     
     .acoes-card {
         flex-direction: column;
-        gap: 0.8rem;
+        gap: 1rem;
     }
     
     .btn-admin, .btn-sair {
         width: 100%;
         text-align: center;
     }
+    
+    .status-agendamentos {
+        margin: 1.5rem 1rem 0;
+        padding: 1.2rem 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
     .banner h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
     
     .titulo-home {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     
     .carros-container {
@@ -352,4 +439,42 @@ footer {
     .car-card {
         margin: 0 0.5rem;
     }
+    
+    .info-veiculo {
+        padding: 1.5rem 1.5rem 1rem;
+    }
+    
+    .acoes-card {
+        padding: 0 1.5rem 1.5rem;
+    }
+}
+
+/* Novos estilos para os botões de status */
+.btn-disponivel {
+    background: #28a745 !important;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.btn-indisponivel {
+    background: #dc3545 !important;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.btn-desabilitado {
+    background: #aaa !important;
+    cursor: not-allowed;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
 }

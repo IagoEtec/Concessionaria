@@ -1,41 +1,41 @@
 <?php
-session_start();
-// Verifica se existe uma mensagem armazenada na sesao
+// Inicia a sessão apenas se não estiver ativa
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Verifica se existe uma mensagem armazenada na sessão (usada após cadastro)
 if (isset($_SESSION['mensagem'])) {
-  
     // Exibe a mensagem em um alerta JavaScript
-    // O alerta aparece assim que a pagina e carregada
-    echo "<script>alert('" . $_SESSION['mensagem'] . "');</script>";
     echo "<script>alert('" . $_SESSION['mensagem'] . "');</script>";
 
-    // Remove a msg
+    // Remove a mensagem da sessão para não exibir novamente
     unset($_SESSION['mensagem']);
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - AutoDrive</title>
-  <link rel="stylesheet" href="assets/css/login.css">
-</head>
-<body>
-  <div class="login-container">
+<!-- Link para o arquivo CSS específico desta página -->
+<link rel="stylesheet" href="assets/css/login.css">
+
+<!-- Container principal do formulário de login -->
+<div class="login-container">
     <h1>Entrar na AutoDrive</h1>
 
+    <!-- Formulário de login que envia dados para processa_login.php -->
     <form action="processa_login.php" method="POST">
-      <input type="email" name="email" placeholder="E-mail" required>
-      <input type="password" name="senha" placeholder="Senha" required>
-      <button type="submit">Entrar</button>
+        <!-- Campo de email com tipo email para validação nativa -->
+        <input type="email" name="email" placeholder="E-mail" required>
+        <!-- Campo de senha com tipo password para ocultar caracteres -->
+        <input type="password" name="senha" placeholder="Senha" required>
+        <!-- Botão de submit para enviar o formulário -->
+        <button type="submit">Entrar</button>
     </form>
 
+    <!-- Link para página de cadastro para usuários novos -->
     <p class="cadastro-link">
-      Ainda não tem conta? <a href="cadastro.php">Cadastre-se aqui</a>
+        Ainda não tem conta? <a href="cadastro.php">Cadastre-se aqui</a>
     </p>
 
+    <!-- Link para voltar à página inicial -->
     <a href="index.php" class="btn-voltar">⬅ Voltar ao Início</a>
-  </div>
-</body>
-</html>
+</div>
