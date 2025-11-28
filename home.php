@@ -13,6 +13,7 @@ $tipo_usuario = $_SESSION['tipo'];
 // Buscar veículos no banco
 $sql = "SELECT * FROM veiculos ORDER BY id DESC";
 $stmt = $pdo->query($sql);
+// $stmt é a variável que armazena um objeto do tipo PDOStatement que é o resultado do prepare()
 $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -31,6 +32,7 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <!-- Faz aparecer coisa diferente na tela caso esteja logado com adm -->
         <?php if ($tipo_usuario === 'admin'): ?>
             <a href="adicionar_veiculo.php" class="btn-admin">Adicionar Veículo</a>
+        <!-- edif é uma sintaxe alternativa do PHP para fechar estruturas if quando misturadas com html -->
         <?php endif; ?>
 
         <a href="logout.php" class="btn-sair">Sair</a>
@@ -90,4 +92,5 @@ $veiculos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </footer>
 
 </body>
+
 </html>
