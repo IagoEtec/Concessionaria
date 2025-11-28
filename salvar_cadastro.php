@@ -8,20 +8,29 @@ if ($_POST) {
     $senha = $_POST['senha'];
     $tipo = $_POST['tipo_conta'];
 
-    $sql = "SELECT id FROM usuarios WHERE email = '$email'";
-    $resultado = $pdo->query($sql);
+    // Usando prepared statements para evitar SQL injection
+    $sql = "SELECT id FROM usuarios WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':email' => $email]);
     
-    if ($resultado->rowCount() > 0) {
+    if ($stmt->rowCount() > 0) {
         echo "<script>alert('Este e-mail já está cadastrado!'); window.history.back();</script>";
         exit;
     }
 
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
+    // Usando prepared statements para inserção
     $sql = "INSERT INTO usuarios (nome, email, senha, tipo_conta) 
-            VALUES ('$nome', '$email', '$senhaHash', '$tipo')";
+            VALUES (:nome, :email, :senha, :tipo)";
+    $stmt = $pdo->prepare($sql);
     
-    if ($pdo->query($sql)) {
+    if ($stmt->execute([
+        ':nome' => $nome,
+        ':email' => $email,
+        ':senha' => $senhaHash,
+        ':tipo' => $tipo
+    ])) {
         // Inicia sessão apenas para armazenar a mensagem
         if (session_status() == PHP_SESSION_NONE) {
             session_start();

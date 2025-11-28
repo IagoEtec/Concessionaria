@@ -1,19 +1,22 @@
 <?php
 require 'conexao.php';
 
-// Verifica se exite o ID envaido pela URL
+// Verifica se existe o ID enviado pela URL
 if (isset($_GET['id'])) {
-    // coloca na variavel
+    // Coloca na variável e sanitiza
     $id = $_GET['id'];
     
-    // deleta
-    $sql = "DELETE FROM veiculos WHERE id = $id";
+    // Prepara a query usando prepared statement para evitar SQL injection
+    $sql = "DELETE FROM veiculos WHERE id = :id";
+    $stmt = $pdo->prepare($sql);
     
-    // executa o comando SQL no banco de dados 
-    if ($pdo->query($sql)) {
+    // Executa o comando SQL no banco de dados com o parâmetro
+    if ($stmt->execute([':id' => $id])) {
         header("Location: home.php");
     } else {
         echo "Erro ao excluir veículo";
     }
+} else {
+    echo "ID não informado";
 }
 ?>

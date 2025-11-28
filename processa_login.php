@@ -5,10 +5,12 @@ require_once 'conexao.php';
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 
-$sql = "SELECT * FROM usuarios WHERE email = '$email'";
-$resultado = $pdo->query($sql);
+// Usando prepared statements para evitar SQL injection
+$sql = "SELECT * FROM usuarios WHERE email = :email";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([':email' => $email]);
 
-$usuario = $resultado->fetch();
+$usuario = $stmt->fetch();
 
 if ($usuario && password_verify($senha, $usuario['senha'])) {
     // A sessão já foi iniciada pelo header, então podemos usar $_SESSION diretamente

@@ -56,8 +56,6 @@ if (!$veiculo) {
         <label for="ano">Ano</label>
         <input type="number" id="ano" name="ano" value="<?php echo $veiculo['ano']; ?>" required>
 
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao" name="descricao" required><?php echo $veiculo['descricao']; ?></textarea>
 
         <label for="imagem">Imagem Atual</label>
         <img src="uploads/<?php echo $veiculo['imagem']; ?>" width="150" style="border-radius:8px; display:block; margin-bottom:10px;">

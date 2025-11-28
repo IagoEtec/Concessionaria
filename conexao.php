@@ -13,7 +13,7 @@ try {
     // Cria uma nova instância PDO para conexão com MySQL
     // PDO (PHP Data Objects) é uma interface para acesso a bancos de dados
     // DSN (Data Source Name): string de conexão com formato "mysql:host=...;dbname=..."
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $user, $pass);
     
     // Configura o PDO para lançar exceções em caso de erro
     // Isso facilita o debug e tratamento de erros

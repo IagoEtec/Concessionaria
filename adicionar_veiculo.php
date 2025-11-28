@@ -2,9 +2,16 @@
 // Inclui o cabeçalho que já inicia a sessão
 include 'includes/header.php';
 
-// Verifica se usuário é administrador
-if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 'admin') {
-    die("Acesso negado. Apenas administradores podem adicionar veículos.");
+// Verifica se usuário é administrador - CORREÇÃO DA VERIFICAÇÃO
+if (!isset($_SESSION['id'])) {
+    die("Acesso negado. Faça login primeiro.");
+}
+
+// DEBUG: Mostrar o tipo de usuário para diagnóstico
+error_log("Tipo de usuário na sessão: " . $_SESSION['tipo']);
+
+if ($_SESSION['tipo'] != 'admin') {
+    die("Acesso negado. Apenas administradores podem adicionar veículos. Seu tipo: " . $_SESSION['tipo']);
 }
 ?>
 
@@ -33,9 +40,6 @@ if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 'admin') {
 
         <label for="ano">Ano</label>
         <input type="number" id="ano" name="ano" placeholder="Ex: 2023" min="1900" max="2030" required>
-
-        <label for="descricao">Descrição</label>
-        <textarea id="descricao" name="descricao" placeholder="Descrição do veículo" required></textarea>
 
         <label for="imagem">Imagem do Veículo</label>
         <input type="file" id="imagem" name="imagem" accept="image/*" required>

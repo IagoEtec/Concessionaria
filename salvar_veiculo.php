@@ -10,8 +10,7 @@ if ($_POST) {
     $marca = $_POST['marca'];          // Marca do veículo
     $modelo = $_POST['modelo'];        // Modelo do veículo
     $ano = $_POST['ano'];              // Ano do veículo
-    $descricao = $_POST['descricao'];  // Descrição do veículo
-
+    
     // Processa o upload da imagem
     // Gera um nome único para evitar sobrescrita de arquivos
     $imagem_nome = "veiculo_" . time() . "_" . uniqid() . ".jpg";
@@ -19,17 +18,16 @@ if ($_POST) {
     // Move o arquivo enviado para a pasta uploads
     if (move_uploaded_file($_FILES['imagem']['tmp_name'], "uploads/$imagem_nome")) {
         
-        // Prepara a query SQL usando prepared statements para segurança
-        $sql = $pdo->prepare("INSERT INTO veiculos (tipo, marca, modelo, ano, descricao, imagem) 
-                VALUES (:tipo, :marca, :modelo, :ano, :descricao, :imagem)");
+        // Prepara a query SQL SEM o campo descricao
+        $sql = $pdo->prepare("INSERT INTO veiculos (tipo, marca, modelo, ano, imagem) 
+                VALUES (:tipo, :marca, :modelo, :ano, :imagem)");
         
-        // Executa a query com os parâmetros
+        // Executa a query com os parâmetros (SEM descricao)
         if ($sql->execute([
             ':tipo' => $tipo,
             ':marca' => $marca,
             ':modelo' => $modelo,
             ':ano' => $ano,
-            ':descricao' => $descricao,
             ':imagem' => $imagem_nome
         ])) {
             // Redireciona para a home em caso de sucesso
