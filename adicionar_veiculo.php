@@ -11,6 +11,7 @@
         <h2>Cadastro de Veículo</h2>
 
         <form action="salvar_veiculo.php" method="POST" enctype="multipart/form-data">
+            
             <label for="tipo_veiculo">Tipo de Veículo</label>
             <select id="tipo_veiculo" name="tipo_veiculo" required>
                 <option value="">Selecione</option>
@@ -20,6 +21,9 @@
 
             <label for="modelo">Modelo</label>
             <input type="text" id="modelo" name="modelo" placeholder="Ex: Honda Civic" required>
+
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" name="descricao" rows="4" placeholder="Escreva uma descrição do veículo..." required></textarea>
 
             <label for="imagem">Imagem do Veículo</label>
             <input type="file" id="imagem" name="imagem" accept="image/*" required>

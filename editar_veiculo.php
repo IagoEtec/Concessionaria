@@ -8,16 +8,11 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Prepara a consulta SQL para buscar o veículo correspondente ao ID
-// O uso de :id impede SQL Injection, pois o valor será tratado de forma segura
 $stmt = $pdo->prepare("SELECT * FROM veiculos WHERE id = :id");
 $stmt->execute([":id" => $id]);
 
-// Busca o resultado da consulta como um array associativo (chaves iguais ao nome das colunas)
-// Se nenhum veículo existir com esse ID, o resultado será false
 $veiculo = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Se nao encontrar nenhum veiculo encerra o script e manda um aviso
 if (!$veiculo) {
     die("Veículo não encontrado.");
 }
@@ -37,24 +32,26 @@ if (!$veiculo) {
 
     <form action="processa_edicao.php" method="POST" enctype="multipart/form-data">
         
-        <!-- ID oculto para enviar ao PHP -->
+        <!-- ID oculto -->
         <input type="hidden" name="id" value="<?php echo $veiculo['id']; ?>">
 
-        <label for="tipo_veiculo">Tipo de Veículo</label>
-        <select id="tipo_veiculo" name="tipo_veiculo" required>
-            <option value="carro" <?php if($veiculo['tipo_veiculo']=='carro') echo 'selected'; ?>>Carro</option>
-            <option value="moto" <?php if($veiculo['tipo_veiculo']=='moto') echo 'selected'; ?>>Moto</option>
+        <label for="tipo">Tipo de Veículo</label>
+        <select id="tipo" name="tipo" required>
+            <option value="carro" <?php if($veiculo['tipo']=='carro') echo 'selected'; ?>>Carro</option>
+            <option value="moto" <?php if($veiculo['tipo']=='moto') echo 'selected'; ?>>Moto</option>
         </select>
 
         <label for="modelo">Modelo</label>
         <input type="text" id="modelo" name="modelo" value="<?php echo $veiculo['modelo']; ?>" required>
+
+        <label for="descricao">Descrição</label>
+        <textarea id="descricao" name="descricao" rows="4" required><?php echo $veiculo['descricao']; ?></textarea>
 
         <label for="imagem">Imagem Atual</label>
         <img src="uploads/<?php echo $veiculo['imagem']; ?>" width="150" style="border-radius:8px; display:block; margin-bottom:10px;">
 
         <label for="imagem">Trocar Imagem (opcional)</label>
         <input type="file" id="imagem" name="imagem" accept="image/*">
-
 
         <button type="submit">Salvar Alterações</button>
     </form>

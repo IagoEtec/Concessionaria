@@ -174,10 +174,10 @@ ALTER TABLE `test_drives`
 -- da tabela pedidos com a coluna id da tabela clientes.
 -- Isso garante que só é possível cadastrar um pedido se o cliente existir.
 
---ALTER TABLE `pedidos`
---  ADD CONSTRAINT `pedidos_ibfk_1`
---  FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`)
---  ON DELETE CASCADE;
+ALTER TABLE `pedidos`
+ ADD CONSTRAINT `pedidos_ibfk_1`
+ FOREIGN KEY (`id_cliente`) REFERENCES `clientes`(`id`)
+ ON DELETE CASCADE;
 
 -- Finaliza a transação
 COMMIT;

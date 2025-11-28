@@ -8,7 +8,7 @@ if (!isset($_POST['id'])) {
 }
 
 $id = $_POST['id'];               // ID do veiculo a ser atualizado
-$tipo = $_POST['tipo_veiculo'];  // Novo tipo (carro/moto)
+$tipo = $_POST['tipo'];  // Novo tipo (carro/moto)
 $modelo = $_POST['modelo'];      // Novo modelo
 $descricao = $_POST['descricao']; // Nova descricao
 
@@ -56,7 +56,7 @@ if (!empty($_FILES['imagem']['name'])) {
 // -----------------------------
 $update = $pdo->prepare("
     UPDATE veiculos 
-    SET tipo_veiculo = :tipo, modelo = :modelo, descricao = :descricao, imagem = :img 
+    SET tipo = :tipo, modelo = :modelo, descricao = :descricao, imagem = :img 
     WHERE id = :id
 ");
 
